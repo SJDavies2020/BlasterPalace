@@ -17,7 +17,12 @@ namespace Blaster_Palace
         private Color backgroundColor;
         public static Size WorldSize { get; private set; }
 
-        private GameObject gameObject;
+        //private GameObject playerObject;
+
+        private List<GameObject> gameObjects = new List<GameObject>();
+
+
+
 
         public GameWorld(Rectangle displayRectangle, Graphics graphics )
         {
@@ -39,12 +44,16 @@ namespace Blaster_Palace
         private void Initialize()
         {
 
-            gameObject = new GameObject();
-            Player p = new Player();
-            SpriteRenderer sr = new SpriteRenderer();
-            gameObject.AddComponent(p);
-            gameObject.AddComponent(sr);
+            GameObject player = new GameObject();
+            player.AddComponent(new SpriteRenderer());
+            player.AddComponent(new Player());
+            gameObjects.Add(player);
 
+            GameObject enemy = new GameObject();
+            enemy.AddComponent(new SpriteRenderer());
+            enemy.AddComponent(new Enemy());
+            gameObjects.Add(enemy);
+                       
             Awake();
             Start();
         
@@ -52,18 +61,33 @@ namespace Blaster_Palace
 
         private void Awake()
         {
-            gameObject.Awake();
+            //gameObject.Awake();
+            foreach (GameObject gameObject in gameObjects)
+            {
+                gameObject.Awake();            
+            }
         }
 
         private void Start()
         {
+
+            //gameObject.Awake();
+            foreach (GameObject gameObject in gameObjects)
+            {
+                gameObject.Start();
+            }
         }
 
         public void Update() 
         {
             MyTime.CalcDeltaTime();
             Graphics.Clear(backgroundColor);
-            gameObject.Update();
+
+            //gameObject.Awake();
+            foreach (GameObject gameObject in gameObjects)
+            {
+                gameObject.Update();
+            }
             backBuffer.Render();
         }
      }
