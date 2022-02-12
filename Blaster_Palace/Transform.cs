@@ -15,5 +15,14 @@ namespace Blaster_Palace
             Position = new Vector2(0, 0);
         }
 
+        public void Translate(Vector2 translation)
+        {
+            if (!float.IsNaN(translation.X) && !float.IsNaN(translation.Y)) 
+            {
+                Position += translation;       
+            }
+        
+        }
+
     }
 }

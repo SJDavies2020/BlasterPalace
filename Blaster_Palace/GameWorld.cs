@@ -10,7 +10,8 @@ namespace Blaster_Palace
 {
     class GameWorld
     {
-        private Graphics dc;
+      
+        public static Graphics Graphics { get; private set; }
 
         private BufferedGraphics backBuffer;
         private Color backgroundColor;
@@ -24,21 +25,44 @@ namespace Blaster_Palace
 
             this.backBuffer = BufferedGraphicsManager.Current.Allocate(graphics, displayRectangle);
             // this.dc = graphics;
-            this.dc = backBuffer.Graphics;
+
+            Graphics = backBuffer.Graphics;
+
+
             backgroundColor = ColorTranslator.FromHtml("#000c41");
-            gameObject = new GameObject();
+            
 
-            SpriteRenderer sr = new SpriteRenderer(dc);
-            sr.SetSprite("player");
-
-            gameObject.AddComponent(sr);
-
-
+            Initialize();
 
         }
+
+        private void Initialize()
+        {
+
+            gameObject = new GameObject();
+            Player p = new Player();
+            SpriteRenderer sr = new SpriteRenderer();
+            gameObject.AddComponent(p);
+            gameObject.AddComponent(sr);
+
+            Awake();
+            Start();
+        
+        }
+
+        private void Awake()
+        {
+            gameObject.Awake();
+        }
+
+        private void Start()
+        {
+        }
+
         public void Update() 
         {
-            dc.Clear(backgroundColor);
+            MyTime.CalcDeltaTime();
+            Graphics.Clear(backgroundColor);
             gameObject.Update();
             backBuffer.Render();
         }

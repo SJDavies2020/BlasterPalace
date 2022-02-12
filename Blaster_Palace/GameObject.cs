@@ -23,30 +23,44 @@ namespace Blaster_Palace
             components.Add(component.ToString(), component);
             component.GameObject = this;
         }
-        public void Update()
+
+        public Component GetComponent(string component)
         {
-            //if (Keyboard.IsKeyDown(Keys.D))
-            //{
-            //    position.X += 1;            
-            //}
-            //if (Keyboard.IsKeyDown(Keys.A))
-            //{
-            //    position.X -= 1;
-            //}
-            //if (Keyboard.IsKeyDown(Keys.W))
-            //{
-            //    position.Y -= 1;
-            //}
-            //if (Keyboard.IsKeyDown(Keys.S))
-            //{
-            //    position.Y += 1;
-            //}
+
+            return components[component];
+        
+        }
+
+        public void Awake()
+        {
+            foreach (Component component in components.Values)
+            {
+                component.Awake();
+            }
+        }
+
+        public void Start()
+        {
 
             foreach (Component component in components.Values)
             {
-                component.Update();
+                if (component.IsEnabled)
+                {
+                component.Start();
+                }
             }
+        }
 
+
+        public void Update()
+        {
+               foreach (Component component in components.Values)
+            {
+                if (component.IsEnabled)
+                {
+                 component.Update();
+                }
+           }
         }
     }
 }

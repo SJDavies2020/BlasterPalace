@@ -8,6 +8,9 @@ namespace Blaster_Palace.Components
 {
     abstract class Component
     {
+
+        public bool IsEnabled { get; set; } = true;
+
         public GameObject GameObject { get; set; }
 
         public virtual void Awake()

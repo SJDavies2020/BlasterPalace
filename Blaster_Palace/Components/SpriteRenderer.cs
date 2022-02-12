@@ -20,9 +20,9 @@ namespace Blaster_Palace.Components
             }
         }
 
-        public SpriteRenderer(Graphics graphics)
+        public SpriteRenderer()
         {
-            this.graphics = graphics;      
+            this.graphics = GameWorld.Graphics;
         }
 
         public void SetSprite(string spriteName)
